@@ -1,0 +1,74 @@
+<header class="fixed top-0 left-0 right-0 z-50 bg-[#1C1B19] text-[#F5F1E8] border-b border-[#2E2C29]">
+  <div class="w-full h-[3px] bg-[#2E2C29]" aria-hidden="true">
+    <div
+      class="h-full transition-[width,background-color] duration-150"
+      [style.width.%]="scrollProgress()"
+      [style.background-color]="isDarkStation() ? '#A3E635' : '#C94A29'"
+    ></div>
+  </div>
+
+  <div class="max-w-[1440px] mx-auto px-4 md:px-8 h-13 flex items-center justify-between gap-4">
+    <a
+      href="#estacao-1"
+      (click)="$event.preventDefault(); scrollToStation('estacao-1')"
+      class="flex items-center gap-2.5 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C94A29]"
+      aria-label="Voltar ao início — Da Lua ao Feed"
+    >
+      <svg
+        viewBox="0 0 28 28"
+        class="w-7 h-7 shrink-0"
+        aria-hidden="true"
+      >
+        <circle cx="14" cy="14" r="5" fill="#F5F1E8" />
+        <circle cx="12.5" cy="13" r="1.2" fill="#1C1B19" opacity="0.35" />
+        <g class="animate-spin-slow" style="transform-origin: 14px 14px;">
+          <circle
+            cx="14"
+            cy="14"
+            r="11"
+            fill="none"
+            stroke="#57534E"
+            stroke-width="1"
+            stroke-dasharray="3 3"
+          />
+          <circle
+            cx="25"
+            cy="14"
+            r="2.4"
+            [attr.fill]="isDarkStation() ? '#A3E635' : '#C94A29'"
+          />
+        </g>
+      </svg>
+
+      <div class="flex items-baseline gap-2">
+        <span class="font-serif-1969 text-base md:text-lg font-semibold tracking-tight">
+          Da Lua ao Feed
+        </span>
+        <span class="hidden sm:inline font-mono-tech text-[11px] text-[#A8A29E]">
+          1969 – 2026
+        </span>
+      </div>
+    </a>
+
+    <nav aria-label="Navegação entre seções" class="flex items-center gap-1 sm:gap-1.5 overflow-x-auto">
+      @for (station of stations; track station.id) {
+        <button
+          type="button"
+          (click)="scrollToStation(station.id)"
+          [attr.aria-current]="activeStation() === station.id ? 'location' : null"
+          class="font-sans-now text-xs md:text-sm font-medium px-3 py-1.5 rounded-sm border transition-all whitespace-nowrap"
+          [class]="
+            activeStation() === station.id
+              ? station.theme === 'dark'
+                ? 'bg-[#A3E635] text-[#0D0D0F] border-[#A3E635] font-bold'
+                : 'bg-[#C94A29] text-[#F5F1E8] border-[#C94A29] font-bold'
+              : 'bg-transparent text-[#D6D3CD] border-transparent hover:border-[#44403C] hover:text-[#F5F1E8]'
+          "
+        >
+          <span class="font-mono-tech text-[11px] opacity-80 mr-1">{{ station.code }}.</span>
+          <span>{{ station.label }}</span>
+        </button>
+      }
+    </nav>
+  </div>
+</header>

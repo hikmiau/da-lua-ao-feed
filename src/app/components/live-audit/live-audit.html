@@ -1,0 +1,342 @@
+<section
+  id="estacao-4"
+  aria-label="Seção 4: Comparador de Perfis de Atenção"
+  class="relative min-h-screen bg-[#F5F1E8] text-[#1C1B19] border-t border-[#1C1B19] pt-20 pb-14 px-4 md:px-8 flex flex-col justify-center"
+>
+  <div class="pointer-events-none absolute inset-0 paper-grain" aria-hidden="true"></div>
+
+  <div class="relative z-10 max-w-[1440px] w-full mx-auto flex flex-col gap-7">
+    <header class="flex flex-wrap items-end justify-between gap-4 border-b border-[#1C1B19] pb-4">
+      <div>
+        <p class="font-mono-tech text-xs text-[#57534E] mb-2">
+          Parte 4 · Comparador de hábitos digitais
+        </p>
+        <h2 class="font-serif-1969 text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.0]">
+          Perfis de Atenção
+        </h2>
+      </div>
+
+      <p class="font-sans-now text-sm text-[#57534E] max-w-md">
+        Escolha um perfil pronto abaixo ou ajuste os controles para mostrar como os hábitos mudam o resultado.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" aria-label="Perfis prontos para demonstração">
+      @for (preset of presets; track preset.id) {
+        <button
+          type="button"
+          (click)="applyPreset(preset)"
+          class="text-left p-4 border border-[#1C1B19] rounded-sm transition-all flex items-center justify-between gap-3"
+          [class]="
+            isPresetActive(preset)
+              ? 'bg-[#1C1B19] text-[#F5F1E8]'
+              : 'bg-[#ECE6DA] text-[#1C1B19] hover:bg-[#E2DACA]'
+          "
+        >
+          <div>
+            <span class="block font-sans-now text-base font-bold">
+              {{ preset.label }}
+            </span>
+            <span
+              class="block font-mono-tech text-xs mt-0.5"
+              [class]="isPresetActive(preset) ? 'text-[#D6D3CD]' : 'text-[#57534E]'"
+            >
+              {{ preset.subtitle }}
+            </span>
+          </div>
+          <span
+            class="w-3 h-3 rounded-full shrink-0 border"
+            [class]="
+              isPresetActive(preset)
+                ? 'bg-[#C94A29] border-[#C94A29]'
+                : 'bg-transparent border-[#1C1B19]'
+            "
+            aria-hidden="true"
+          ></span>
+        </button>
+      }
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+      <div class="lg:col-span-7 flex flex-col gap-4">
+        <article class="border border-[#1C1B19] rounded-sm bg-[#ECE6DA] p-5 flex flex-col gap-3">
+          <div class="flex items-baseline justify-between gap-3">
+            <label
+              for="screen-hours-slider"
+              class="font-sans-now text-sm sm:text-base font-bold"
+            >
+              1. Tempo de tela por dia
+            </label>
+            <span class="font-mono-tech text-3xl sm:text-4xl font-bold tabular-nums text-[#C94A29]">
+              {{ screenHours() }}h / dia
+            </span>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <span class="font-mono-tech text-xs font-bold">1h</span>
+            <input
+              id="screen-hours-slider"
+              type="range"
+              min="1"
+              max="12"
+              [value]="screenHours()"
+              (input)="onHoursChange($event)"
+              aria-label="Tempo de tela por dia de 1 a 12 horas"
+              class="era-slider w-full h-9"
+              style="--slider-accent: #C94A29"
+            />
+            <span class="font-mono-tech text-xs font-bold">12h</span>
+          </div>
+        </article>
+
+        <article class="border border-[#1C1B19] rounded-sm bg-[#F5F1E8] p-5 flex flex-col gap-3">
+          <p class="font-sans-now text-sm sm:text-base font-bold">
+            2. Uso de "segunda tela" ao ver filmes ou TV
+          </p>
+          <div class="grid grid-cols-3 gap-2" role="radiogroup" aria-label="Uso de segunda tela">
+            @for (opt of secondScreenOptions; track opt.label; let idx = $index) {
+              <button
+                type="button"
+                role="radio"
+                [attr.aria-checked]="secondScreenIndex() === idx"
+                (click)="secondScreenIndex.set(idx)"
+                class="font-sans-now text-xs sm:text-sm font-bold py-3 px-2 border border-[#1C1B19] rounded-sm transition-colors"
+                [class]="
+                  secondScreenIndex() === idx
+                    ? 'bg-[#1C1B19] text-[#F5F1E8]'
+                    : 'bg-[#F5F1E8] text-[#1C1B19] hover:bg-[#ECE6DA]'
+                "
+              >
+                {{ opt.label }}
+              </button>
+            }
+          </div>
+        </article>
+
+        <article class="border border-[#1C1B19] rounded-sm bg-[#F5F1E8] p-5 flex flex-col gap-3">
+          <p class="font-sans-now text-sm sm:text-base font-bold">
+            3. Formato principal de notícias
+          </p>
+          <div class="grid grid-cols-3 gap-2" role="radiogroup" aria-label="Formato de notícias">
+            @for (opt of newsFormatOptions; track opt.label; let idx = $index) {
+              <button
+                type="button"
+                role="radio"
+                [attr.aria-checked]="newsFormatIndex() === idx"
+                (click)="newsFormatIndex.set(idx)"
+                class="font-sans-now text-xs sm:text-sm font-bold py-3 px-2 border border-[#1C1B19] rounded-sm transition-colors"
+                [class]="
+                  newsFormatIndex() === idx
+                    ? 'bg-[#1C1B19] text-[#F5F1E8]'
+                    : 'bg-[#F5F1E8] text-[#1C1B19] hover:bg-[#ECE6DA]'
+                "
+              >
+                {{ opt.label }}
+              </button>
+            }
+          </div>
+        </article>
+
+        <article class="border border-[#1C1B19] rounded-sm bg-[#F5F1E8] p-5 flex flex-col gap-3">
+          <p class="font-sans-now text-sm sm:text-base font-bold">
+            4. Reação a uma opinião contrária
+          </p>
+          <div class="grid grid-cols-3 gap-2" role="radiogroup" aria-label="Reação a opinião contrária">
+            @for (opt of opposingViewOptions; track opt.label; let idx = $index) {
+              <button
+                type="button"
+                role="radio"
+                [attr.aria-checked]="opposingViewIndex() === idx"
+                (click)="opposingViewIndex.set(idx)"
+                class="font-sans-now text-xs sm:text-sm font-bold py-3 px-2 border border-[#1C1B19] rounded-sm transition-colors"
+                [class]="
+                  opposingViewIndex() === idx
+                    ? 'bg-[#1C1B19] text-[#F5F1E8]'
+                    : 'bg-[#F5F1E8] text-[#1C1B19] hover:bg-[#ECE6DA]'
+                "
+              >
+                {{ opt.label }}
+              </button>
+            }
+          </div>
+        </article>
+      </div>
+
+      <aside
+        aria-label="Resultado do perfil selecionado"
+        aria-live="polite"
+        class="lg:col-span-5 border-2 border-[#1C1B19] rounded-sm bg-[#1C1B19] text-[#F5F1E8] p-5 md:p-6 flex flex-col justify-between gap-5"
+      >
+        <div class="flex items-center justify-between border-b border-[#33312E] pb-3">
+          <div class="flex items-center gap-2.5">
+            <svg
+              viewBox="0 0 28 28"
+              class="w-6 h-6 shrink-0"
+              [class]="
+                currentProfile().id === 'refem-algoritmo'
+                  ? 'animate-spin-fast'
+                  : currentProfile().id === 'hibrido'
+                    ? 'animate-spin-medium'
+                    : 'animate-spin-slow'
+              "
+              fill="none"
+              aria-hidden="true"
+            >
+              <circle
+                cx="14"
+                cy="14"
+                r="10"
+                [attr.stroke]="currentProfile().accent"
+                stroke-width="2"
+                stroke-dasharray="9 5"
+              />
+              <circle cx="14" cy="14" r="3" fill="#F5F1E8" />
+            </svg>
+            <span class="font-mono-tech text-xs text-[#D6D3CD]">Índice de captura</span>
+          </div>
+
+          <span
+            class="font-mono-tech text-xs px-2.5 py-0.5 rounded-sm font-bold"
+            [style.background-color]="currentProfile().accent"
+            [style.color]="currentProfile().id === 'hibrido' ? '#1C1B19' : '#FFFFFF'"
+          >
+            {{ currentProfile().rangeLabel }}
+          </span>
+        </div>
+
+        <div class="flex flex-col items-center">
+          <svg
+            viewBox="0 0 360 220"
+            class="w-full max-w-[360px] h-auto block"
+            role="img"
+            [attr.aria-label]="'Medidor marcando ' + totalScore() + ' de 100: ' + currentProfile().title"
+          >
+            <path
+              d="M 48 176 A 132 132 0 0 1 312 176"
+              fill="none"
+              stroke="#33312E"
+              stroke-width="18"
+            />
+
+            <path
+              d="M 48 176 A 132 132 0 0 1 312 176"
+              fill="none"
+              [attr.stroke]="currentProfile().accent"
+              stroke-width="18"
+              [attr.stroke-dasharray]="arcLength"
+              [attr.stroke-dashoffset]="activeArcDashOffset()"
+              class="transition-[stroke-dashoffset,stroke] duration-300"
+            />
+
+            @for (tick of gaugeTicks; track tick.value) {
+              <line
+                [attr.x1]="tick.x1"
+                [attr.y1]="tick.y1"
+                [attr.x2]="tick.x2"
+                [attr.y2]="tick.y2"
+                [attr.stroke]="tick.major ? '#F5F1E8' : '#78716C'"
+                [attr.stroke-width]="tick.major ? 2 : 1"
+              />
+              @if (tick.major) {
+                <text
+                  [attr.x]="tick.labelX"
+                  [attr.y]="tick.labelY"
+                  text-anchor="middle"
+                  fill="#D6D3CD"
+                  font-family="IBM Plex Mono, monospace"
+                  font-size="11"
+                  font-weight="600"
+                >
+                  {{ tick.value }}
+                </text>
+              }
+            }
+
+            <g
+              [style.transform]="'rotate(' + needleRotation() + 'deg)'"
+              style="transform-origin: 180px 176px; transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1);"
+            >
+              <line x1="180" y1="176" x2="180" y2="58" stroke="#F5F1E8" stroke-width="3.5" />
+              <polygon points="180,48 174,64 186,64" fill="#F5F1E8" />
+            </g>
+
+            <circle cx="180" cy="176" r="10" fill="#F5F1E8" />
+            <circle cx="180" cy="176" r="4.5" [attr.fill]="currentProfile().accent" />
+
+            <text
+              x="48"
+              y="206"
+              text-anchor="start"
+              fill="#E87A5D"
+              font-family="IBM Plex Mono, monospace"
+              font-size="10.5"
+              font-weight="700"
+            >
+              1969
+            </text>
+            <text
+              x="180"
+              y="206"
+              text-anchor="middle"
+              fill="#D6D3CD"
+              font-family="IBM Plex Mono, monospace"
+              font-size="10.5"
+              font-weight="700"
+            >
+              Híbrido
+            </text>
+            <text
+              x="312"
+              y="206"
+              text-anchor="end"
+              fill="#FCA5A5"
+              font-family="IBM Plex Mono, monospace"
+              font-size="10.5"
+              font-weight="700"
+            >
+              Algoritmo
+            </text>
+          </svg>
+
+          <div class="text-center mt-1">
+            <p class="font-mono-tech text-6xl font-bold tabular-nums leading-none">
+              {{ totalScore() }}<span class="text-2xl text-[#A8A29E]">/100</span>
+            </p>
+            <h3
+              class="font-sans-now text-2xl sm:text-3xl font-extrabold tracking-tight mt-2"
+              [style.color]="
+                currentProfile().id === 'refem-algoritmo'
+                  ? '#FCA5A5'
+                  : currentProfile().id === 'espectador-1969'
+                    ? '#F28B6E'
+                    : currentProfile().accent
+              "
+            >
+              {{ currentProfile().title }}
+            </h3>
+          </div>
+        </div>
+
+        <ul class="border-t border-[#33312E] pt-4 flex flex-col gap-3 text-sm leading-relaxed">
+          @for (bullet of currentProfile().bullets; track bullet; let idx = $index) {
+            <li class="flex items-start gap-2.5">
+              <span
+                class="font-mono-tech text-xs font-bold shrink-0 mt-0.5"
+                [style.color]="
+                  currentProfile().id === 'refem-algoritmo'
+                    ? '#FCA5A5'
+                    : currentProfile().id === 'espectador-1969'
+                      ? '#F28B6E'
+                      : currentProfile().accent
+                "
+              >
+                0{{ idx + 1 }}
+              </span>
+              <span class="text-[#ECE6DA]">{{ bullet }}</span>
+            </li>
+          }
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>

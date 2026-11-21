@@ -1,0 +1,390 @@
+<section
+  id="estacao-1"
+  aria-label="Seção 1: Da Lua ao Feed — Linha do tempo de 1969 a 2026"
+  class="relative min-h-screen pt-18 pb-10 px-4 md:px-8 flex flex-col justify-between transition-colors duration-150 overflow-hidden"
+  [style.background-color]="stageBg()"
+  [style.color]="stageText()"
+>
+  <div
+    class="pointer-events-none absolute inset-0 paper-grain"
+    [style.opacity]="paperOpacity()"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative z-10 max-w-[1440px] w-full mx-auto flex-1 flex flex-col justify-between gap-6">
+    <div
+      class="flex flex-wrap items-end justify-between gap-4 pb-4 border-b"
+      [style.border-color]="stageBorder()"
+    >
+      <div>
+        <p class="font-mono-tech text-xs tracking-wide mb-2" [style.color]="stageMuted()">
+          História e Desenvolvimento de Sistemas · BNCC EM13CHS603
+        </p>
+        <h1
+          class="text-5xl sm:text-6xl lg:text-7xl leading-[0.98] tracking-tight"
+          [class]="eraPhase() === '1969' ? 'font-serif-1969 font-semibold' : 'font-sans-now font-extrabold'"
+        >
+          Da Lua ao Feed
+        </h1>
+      </div>
+
+      <div class="flex items-baseline gap-3">
+        <span class="font-sans-now text-sm font-medium" [style.color]="stageMuted()">
+          Ano
+        </span>
+        <span
+          class="font-mono-tech text-5xl sm:text-6xl lg:text-7xl font-bold tabular-nums leading-none"
+          [style.color]="stageAccent()"
+          aria-live="polite"
+        >
+          {{ currentYear() }}
+        </span>
+      </div>
+    </div>
+
+    <div
+      class="border rounded-sm p-4 md:p-6 flex flex-col gap-5"
+      [style.border-color]="stageBorder()"
+      [style.background-color]="stageSurface()"
+    >
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5">
+          <span class="relative flex h-2.5 w-2.5" aria-hidden="true">
+            <span
+              class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+              [style.background-color]="stageAccent()"
+            ></span>
+            <span
+              class="relative inline-flex rounded-full h-2.5 w-2.5"
+              [style.background-color]="stageAccent()"
+            ></span>
+          </span>
+          <span class="font-sans-now text-sm font-medium" [style.color]="stageMuted()">
+            Como o formato da tela mudou a forma como vemos o mundo
+          </span>
+        </div>
+
+        <span
+          class="font-mono-tech text-xs font-semibold px-3 py-1 rounded-sm border"
+          [style.border-color]="stageAccent()"
+          [style.color]="stageAccent()"
+        >
+          {{ ratioBadge() }}
+        </span>
+      </div>
+
+      <div class="w-full overflow-hidden">
+        <svg
+          viewBox="0 0 840 340"
+          class="w-full h-auto max-h-[340px] block"
+          role="img"
+          [attr.aria-label]="'Transformação visual da tela: ' + ratioBadge()"
+        >
+          <defs>
+            <pattern id="hero-grid" width="28" height="28" patternUnits="userSpaceOnUse">
+              <path
+                d="M 28 0 L 0 0 0 28"
+                fill="none"
+                [attr.stroke]="stageBorder()"
+                stroke-width="0.6"
+                opacity="0.28"
+              />
+            </pattern>
+          </defs>
+
+          <rect x="0" y="0" width="840" height="340" fill="url(#hero-grid)" />
+
+          @if (tvOverlayOpacity() > 0.05) {
+            <g [attr.opacity]="tvOverlayOpacity()">
+              <circle cx="96" cy="76" r="2.2" [attr.fill]="stageMuted()" class="animate-pulse" />
+              <circle cx="152" cy="148" r="1.8" [attr.fill]="stageMuted()" class="animate-pulse" />
+              <circle cx="712" cy="84" r="2.4" [attr.fill]="stageMuted()" class="animate-pulse" />
+              <circle cx="754" cy="214" r="1.8" [attr.fill]="stageMuted()" class="animate-pulse" />
+              <circle cx="118" cy="264" r="2" [attr.fill]="stageMuted()" class="animate-pulse" />
+
+              <g transform="translate(105, 195)">
+                <g class="animate-spin-slow">
+                  <circle cx="0" cy="0" r="22" fill="none" [attr.stroke]="stageMuted()" stroke-width="1" stroke-dasharray="4 4" />
+                  <rect x="19" y="-3" width="6" height="6" fill="#C94A29" />
+                </g>
+                <circle cx="0" cy="0" r="6" [attr.fill]="stageText()" opacity="0.25" />
+              </g>
+
+              <g transform="translate(736, 152)">
+                <g class="animate-spin-reverse">
+                  <circle cx="0" cy="0" r="26" fill="none" [attr.stroke]="stageMuted()" stroke-width="1" stroke-dasharray="3 5" />
+                  <circle cx="26" cy="0" r="3.5" fill="#C94A29" />
+                </g>
+                <circle cx="0" cy="0" r="8" fill="none" [attr.stroke]="stageText()" stroke-width="1.2" opacity="0.45" />
+              </g>
+            </g>
+          }
+
+          @if (feedOverlayOpacity() > 0.05) {
+            <g [attr.opacity]="feedOverlayOpacity() * 0.45" stroke-dasharray="4 6">
+              <line x1="156" y1="134" x2="212" y2="216" [attr.stroke]="stageBorder()" stroke-width="1.2" />
+              <line x1="314" y1="216" x2="370" y2="172" [attr.stroke]="stageBorder()" stroke-width="1.2" />
+              <line x1="472" y1="172" x2="528" y2="216" [attr.stroke]="stageBorder()" stroke-width="1.2" />
+              <line x1="630" y1="216" x2="686" y2="134" [attr.stroke]="stageBorder()" stroke-width="1.2" />
+            </g>
+          }
+
+          @for (frame of morphFrames(); track frame.id) {
+            <g [attr.opacity]="frame.opacity">
+              <rect
+                [attr.x]="frame.x"
+                [attr.y]="frame.y"
+                [attr.width]="frame.w"
+                [attr.height]="frame.h"
+                rx="3"
+                [attr.fill]="stageBg()"
+                [attr.stroke]="frame.isMain ? stageAccent() : stageText()"
+                [attr.stroke-width]="frame.isMain ? 2.2 : 1.3"
+              />
+
+              @if (frame.isMain && tvOverlayOpacity() > 0.02) {
+                <g [attr.opacity]="tvOverlayOpacity()">
+                  <path
+                    [attr.d]="'M ' + (frame.x + 22) + ' ' + (frame.y + frame.h * 0.72) + ' Q ' + (frame.x + frame.w * 0.5) + ' ' + (frame.y + frame.h * 0.65) + ' ' + (frame.x + frame.w - 22) + ' ' + (frame.y + frame.h * 0.72)"
+                    fill="none"
+                    [attr.stroke]="stageText()"
+                    stroke-width="1.5"
+                  />
+
+                  <g [attr.transform]="'translate(' + (frame.x + frame.w * 0.5) + ',' + (frame.y + frame.h * 0.42) + ')'">
+                    <circle cx="0" cy="0" r="28" fill="none" [attr.stroke]="stageText()" stroke-width="1.6" />
+                    <circle cx="-8" cy="-6" r="5" fill="none" [attr.stroke]="stageMuted()" stroke-width="1.1" />
+                    <circle cx="10" cy="7" r="7" fill="none" [attr.stroke]="stageMuted()" stroke-width="1.1" />
+                    <circle cx="8" cy="-12" r="3" fill="none" [attr.stroke]="stageMuted()" stroke-width="1.1" />
+
+                    <g class="animate-spin-slow">
+                      <circle cx="0" cy="0" r="56" fill="none" stroke="#C94A29" stroke-width="1.4" stroke-dasharray="8 6" />
+                      <g transform="translate(56, 0)">
+                        <rect x="-5" y="-5" width="10" height="10" fill="#C94A29" />
+                        <line x1="-13" y1="0" x2="-5" y2="0" [attr.stroke]="stageText()" stroke-width="2" />
+                        <line x1="5" y1="0" x2="13" y2="0" [attr.stroke]="stageText()" stroke-width="2" />
+                      </g>
+                    </g>
+                  </g>
+
+                  <text
+                    [attr.x]="frame.x + 20"
+                    [attr.y]="frame.y + 30"
+                    [attr.fill]="stageText()"
+                    font-family="IBM Plex Mono, monospace"
+                    font-size="11"
+                    font-weight="600"
+                  >
+                    Apollo 11 · 20 de julho de 1969
+                  </text>
+                  <text
+                    [attr.x]="frame.x + 20"
+                    [attr.y]="frame.y + frame.h - 20"
+                    fill="#C94A29"
+                    font-family="IBM Plex Mono, monospace"
+                    font-size="11"
+                    font-weight="700"
+                  >
+                    TV 4:3 · Um mesmo sinal para o mundo
+                  </text>
+                </g>
+              }
+
+              @if (feedOverlayOpacity() > 0.05) {
+                <g [attr.opacity]="feedOverlayOpacity()">
+                  <rect
+                    [attr.x]="frame.x + 8"
+                    [attr.y]="frame.y + 10"
+                    [attr.width]="frame.w - 16"
+                    height="12"
+                    rx="1.5"
+                    [attr.fill]="frame.accent"
+                  />
+                  <rect
+                    [attr.x]="frame.x + 8"
+                    [attr.y]="frame.y + 30"
+                    [attr.width]="frame.w - 16"
+                    height="62"
+                    rx="2"
+                    fill="none"
+                    [attr.stroke]="stageBorder()"
+                    stroke-width="1"
+                  />
+                  <g [attr.transform]="'translate(' + (frame.x + frame.w * 0.5) + ',' + (frame.y + 61) + ')'">
+                    <g [class]="frame.isMain ? 'animate-spin-medium' : 'animate-spin-slow'">
+                      <circle cx="0" cy="0" r="14" fill="none" [attr.stroke]="frame.accent" stroke-width="1.5" stroke-dasharray="14 8" />
+                      <circle cx="14" cy="0" r="2.5" [attr.fill]="frame.accent" />
+                    </g>
+                  </g>
+                  <text
+                    [attr.x]="frame.x + 8"
+                    [attr.y]="frame.y + 114"
+                    [attr.fill]="stageText()"
+                    font-family="DM Sans, sans-serif"
+                    font-size="10.5"
+                    font-weight="700"
+                  >
+                    {{ frame.tag }}
+                  </text>
+                  <text
+                    [attr.x]="frame.x + 8"
+                    [attr.y]="frame.y + 130"
+                    [attr.fill]="frame.accent"
+                    font-family="IBM Plex Mono, monospace"
+                    font-size="8.5"
+                  >
+                    {{ frame.sub }}
+                  </text>
+                  <rect
+                    [attr.x]="frame.x + 8"
+                    [attr.y]="frame.y + frame.h - 24"
+                    [attr.width]="(frame.w - 20) * 0.48"
+                    height="14"
+                    rx="1.5"
+                    fill="none"
+                    [attr.stroke]="frame.accent"
+                    stroke-width="1"
+                  />
+                  <rect
+                    [attr.x]="frame.x + 12 + (frame.w - 20) * 0.48"
+                    [attr.y]="frame.y + frame.h - 24"
+                    [attr.width]="(frame.w - 20) * 0.48"
+                    height="14"
+                    rx="1.5"
+                    [attr.fill]="frame.accent"
+                  />
+                </g>
+              }
+            </g>
+          }
+        </svg>
+      </div>
+
+      <div class="flex flex-col gap-3 pt-3 border-t" [style.border-color]="stageBorder()">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <label
+            for="era-slider"
+            class="font-sans-now text-sm font-semibold"
+          >
+            Arraste a linha do tempo ou clique em uma fase
+          </label>
+          <div class="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              (click)="toggleAutoPlay()"
+              class="font-mono-tech text-xs font-semibold px-3 py-1.5 rounded-sm border transition-colors flex items-center gap-2"
+              [style.border-color]="stageAccent()"
+              [style.color]="isPlaying() ? accentInk() : stageText()"
+              [style.background-color]="isPlaying() ? stageAccent() : 'transparent'"
+            >
+              <span
+                class="inline-block w-2 h-2 rounded-full"
+                [class]="isPlaying() ? 'animate-ping' : ''"
+                [style.background-color]="isPlaying() ? accentInk() : stageAccent()"
+                aria-hidden="true"
+              ></span>
+              {{ isPlaying() ? 'Pausar' : 'Animar' }}
+            </button>
+
+            <button
+              type="button"
+              (click)="setPreset(0)"
+              class="font-sans-now text-xs font-semibold px-3 py-1.5 rounded-sm border transition-colors"
+              [style.border-color]="eraPhase() === '1969' ? stageAccent() : stageBorder()"
+              [style.background-color]="eraPhase() === '1969' ? stageAccent() : 'transparent'"
+              [style.color]="eraPhase() === '1969' ? accentInk() : stageText()"
+            >
+              1969
+            </button>
+            <button
+              type="button"
+              (click)="setPreset(50)"
+              class="font-sans-now text-xs font-semibold px-3 py-1.5 rounded-sm border transition-colors"
+              [style.border-color]="eraPhase() === 'transicao' ? stageAccent() : stageBorder()"
+              [style.background-color]="eraPhase() === 'transicao' ? stageAccent() : 'transparent'"
+              [style.color]="eraPhase() === 'transicao' ? accentInk() : stageText()"
+            >
+              Transição
+            </button>
+            <button
+              type="button"
+              (click)="setPreset(100)"
+              class="font-sans-now text-xs font-semibold px-3 py-1.5 rounded-sm border transition-colors"
+              [style.border-color]="eraPhase() === 'hoje' ? stageAccent() : stageBorder()"
+              [style.background-color]="eraPhase() === 'hoje' ? stageAccent() : 'transparent'"
+              [style.color]="eraPhase() === 'hoje' ? accentInk() : stageText()"
+            >
+              Hoje
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <span class="font-mono-tech text-xs font-bold shrink-0">1969</span>
+          <input
+            id="era-slider"
+            type="range"
+            min="0"
+            max="100"
+            [value]="eraProgress()"
+            (input)="onSliderInput($event)"
+            aria-label="Linha do tempo de 1969 a 2026"
+            class="era-slider w-full h-9"
+            [style.--slider-accent]="stageAccent()"
+          />
+          <span class="font-mono-tech text-xs font-bold shrink-0">2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4" aria-live="polite">
+      <article
+        class="border rounded-sm p-4 md:p-5 transition-transform duration-200 hover:-translate-y-0.5"
+        [style.border-color]="stageBorder()"
+        [style.background-color]="stageSurface()"
+      >
+        <p class="font-mono-tech text-xs mb-2" [style.color]="stageMuted()">
+          01 · Audiência
+        </p>
+        <p class="text-2xl lg:text-3xl font-extrabold tracking-tight leading-tight mb-1" [style.color]="stageAccent()">
+          {{ audienceMetric().big }}
+        </p>
+        <p class="font-sans-now text-sm">
+          {{ audienceMetric().detail }}
+        </p>
+      </article>
+
+      <article
+        class="border rounded-sm p-4 md:p-5 transition-transform duration-200 hover:-translate-y-0.5"
+        [style.border-color]="stageBorder()"
+        [style.background-color]="stageSurface()"
+      >
+        <p class="font-mono-tech text-xs mb-2" [style.color]="stageMuted()">
+          02 · Eixo político
+        </p>
+        <p class="text-2xl lg:text-3xl font-extrabold tracking-tight leading-tight mb-1" [style.color]="stageAccent()">
+          {{ politicsMetric().big }}
+        </p>
+        <p class="font-sans-now text-sm">
+          {{ politicsMetric().detail }}
+        </p>
+      </article>
+
+      <article
+        class="border rounded-sm p-4 md:p-5 transition-transform duration-200 hover:-translate-y-0.5"
+        [style.border-color]="stageBorder()"
+        [style.background-color]="stageSurface()"
+      >
+        <p class="font-mono-tech text-xs mb-2" [style.color]="stageMuted()">
+          03 · Tempo de atenção
+        </p>
+        <p class="text-2xl lg:text-3xl font-extrabold tracking-tight leading-tight mb-1" [style.color]="stageAccent()">
+          {{ attentionMetric().big }}
+        </p>
+        <p class="font-sans-now text-sm">
+          {{ attentionMetric().detail }}
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
